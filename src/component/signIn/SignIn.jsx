@@ -1,11 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./SignIn.css";
 
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
+import { useDispatch, useSelector } from "react-redux";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+
+import { signIn } from "../../Redux/action/signInAction";
 
 export default function SignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const dispatch = useDispatch();
+  let payload = { email, password };
+
+  const sigin = () => {
+    setOpen(true)
+    dispatch(signIn(payload));
+  };
+
+  const clickShowPass = () => {
+    setShowPassword(!showPassword);
+  };
+
+const data = useSelector((state)=>state.signInReducer)
+useEffect(()=>{
+  if(data.loading === false){
+    setOpen(false)
+  }
+},[data.loading])
+
   return (
     <div className="loginContainer">
       <div className="loginContainerBox">
@@ -34,6 +63,7 @@ export default function SignIn() {
                     size="small"
                     variant="outlined"
                     fullWidth
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
               </div>
@@ -46,13 +76,19 @@ export default function SignIn() {
                     label="Password"
                     size="small"
                     variant="outlined"
+                    onChange={(e) => setPassword(e.target.value)}
+                    type={showPassword ? "text" : "password"}
                     fullWidth
                   />
                 </div>
               </div>
 
               <span className="checkBoxInputs">
-                <Checkbox color="primary" className="showPass" />
+                <Checkbox
+                  color="primary"
+                  className="showPass"
+                  onClick={clickShowPass}
+                />
                 Show Password
               </span>
 
@@ -70,9 +106,19 @@ export default function SignIn() {
                   </Button>
                 </div>
                 <div className="nextButton">
-                  <Button variant="contained" color="primary">
+                  <Button variant="contained" color="primary" onClick={sigin}>
                     Submit
                   </Button>
+                  <Backdrop
+                    sx={{
+                      color: "#fff",
+                      zIndex: (theme) => theme.zIndex.drawer + 1,
+                    }}
+                    open={open}
+                    // onClick={handleClose}
+                  >
+                    <CircularProgress color="inherit" />
+                  </Backdrop>
                 </div>
               </div>
             </form>
