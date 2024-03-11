@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import "./SignIn.css";
 
 import TextField from "@mui/material/TextField";
@@ -15,6 +16,7 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [open, setOpen] = useState(false);
+
 
   const dispatch = useDispatch();
   let payload = { email, password };
@@ -93,18 +95,22 @@ useEffect(()=>{
               </span>
 
               <div className="footerButtons">
+              <NavLink  to ='/forget'>
                 <div className="signInLink">
                   <Button color="primary">
                     <b>Forget Password</b>
                   </Button>
                 </div>
+                </NavLink>
               </div>
               <div className="footerButtonsSign">
+              <NavLink to='/signUp'>
                 <div className="signInLink">
                   <Button color="primary">
                     <b>Create Account</b>
                   </Button>
                 </div>
+                </NavLink>
                 <div className="nextButton">
                   <Button variant="contained" color="primary" onClick={sigin}>
                     Submit

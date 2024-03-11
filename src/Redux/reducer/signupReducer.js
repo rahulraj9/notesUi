@@ -1,5 +1,5 @@
 
-import {SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_FAILURE} from '../action/signInAction'
+import {SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE} from '../action/signUpAction'
 
 const initialState = {
   loading: false,
@@ -7,23 +7,22 @@ const initialState = {
   user: null
 }
 
-export default function signInReducer(state=initialState,action){
- console.log("Action::",action)
+export default function SIGNUPReducer(state=initialState,action){
   switch (action.type) {
-    case SIGNIN_REQUEST:
+    case SIGNUP_REQUEST:
       return{
         ...state,
         loading: true,
         error: null
       }
-      case SIGNIN_SUCCESS:
+      case SIGNUP_SUCCESS:
         return {
           ...state,
           loading: false,
           user: action.payload,
           error: null
         };
-        case SIGNIN_FAILURE:
+        case SIGNUP_FAILURE:
           return {
             ...state,
             loading: false,
